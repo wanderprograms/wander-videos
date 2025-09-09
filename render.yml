@@ -2,6 +2,7 @@ services:
   - type: web
     name: wander-videos
     env: python
-    buildCommand: ""
-    startCommand: "python app.py"
     plan: free
+    buildCommand: pip install -r requirements.txt 
+    startCommand: python app.py
+    autoDeploy: true
