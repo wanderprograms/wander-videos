@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🎬 Isaac Video Hub</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script>
+    function searchVideos() {
+      const query = document.getElementById('search').value;
+      fetch(`/search?q=${query}`)
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById('video-list');
+          list.innerHTML = '';
+          data.forEach(video => {
+            const item = document.createElement('div');
+            item.className = 'video-item';
+            item.innerHTML = `<a href="/play/${video.name}">🎬 ${video.name}</a> — ${video.size}`;
+            list.appendChild(item);
+          });
+        });
+    }
+  </script>
+</head>
+<body>
+  <h2 style="margin:20px;">🎥 Welcome to Isaac Video Hub</h2>
+
+  <div class="search-box">
+    <input type="text" id="search" onkeyup="searchVideos()" placeholder="Search local videos...">
+  </div>
+
+  <div id="video-list" style="margin:20px;">
+    {% for video in videos %}
+      <div class="video-item">
+        <a href="/play/{{ video.name }}">🎬 {{ video.name }}</a> — {{ video.size }}
+      </div>
+    {% endfor %}
+  </div>
+
+  <hr style="margin:30px 0;">
+
+  <h3 style="margin:20px;">🌐 External Videos</h3>
+  <div style="margin:20px;">
+    <div class="video-item">
+      <a href="/play_external?url=https://www.dropbox.com/scl/fi/dskbfujfz3yikap699uwd/76K-views-12K-comments-Nkhani-ya-ma-ID-a-standard-8-students-By-Alfred-Tambal_20250516_073345.mp4?rlkey=hugpjhn165lkc7hrwpnnanw3d&st=hwdt6ps6&raw=1">
+        🎬 Nkhani ya ma ID a Standard 8 — 400MB
+      </a>
+    </div>
+
+    <!-- You can add more external links below -->
+    <!--
+    <div class="video-item">
+      <a href="/play_external?url=https://drive.google.com/uc?export=download&id=YOUR_FILE_ID">
+        🎬 Google Drive Video Example
+      </a>
+    </div>
+    -->
+  </div>
+</body>
+</html>

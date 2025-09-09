@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Hub</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script>
+    function searchVideos() {
+      const query = document.getElementById('search').value;
+      fetch(/search?q=${query})
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById('video-list');
+          list.innerHTML = '';
+          data.forEach(video => {
+            const item = document.createElement('div');
+            item.className = 'video-item';
+            item.innerHTML = <a href="/play/${video.name}">🎬 ${video.name}</a> — ${video.size};
+            list.appendChild(item);
+          });
+        });
+    }
+  </script>
+</head>
+<body>
+  <h2 style="margin:20px;">🎬 Ma Video</h2>
+  <div class="search-box">
+    <input type="text" id="search" onkeyup="searchVideos()" placeholder="Search video...">
+  </div>
+  <div id="video-list" style="margin:20px;">
+    {% for video in videos %}
+      <div class="video-item">
+        <a href="/play/{{ video.name }}">🎬 {{ video.name }}</a> — {{ video.size }}
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

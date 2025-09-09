@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Player</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="margin:0;">
+  <button onclick="history.back()" style="position:absolute;top:10px;left:10px;">⬅ Back</button>
+
+  {% if external %}
+    <video src="{{ video_url }}" controls autoplay style="width:100vw;height:100vh;"></video>
+    <a href="{{ video_url }}" download style="position:absolute;bottom:10px;right:10px;">⬇ Download</a>
+  {% else %}
+    <video src="/static/videos/{{ video_name }}" controls autoplay style="width:100vw;height:100vh;"></video>
+    <a href="/download/{{ video_name }}" style="position:absolute;bottom:10px;right:10px;">⬇ Download</a>
+  {% endif %}
+</body>
+</html>
